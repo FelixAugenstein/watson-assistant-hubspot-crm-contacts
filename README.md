@@ -27,24 +27,22 @@ Give your action a name, keep the Default Package and choose Node.js - for insta
 
 ![Create Cloud Function Action](readme_images/create-cloud-function.png)
 
-Copy and paste the `create-jira-issue.js` code. Now you need to provide some properties from the native Node.Js code you copied from Postman:
+Copy and paste the `create-hubspot-crm-contacts.js` code. Now you need to provide your HubSpot API key / hapikey.
 
-- Correct hostname
-- Header Authorization
-- Header Cookie
-- Project ID
-
-Check all the lines in the code where it says 'YOUR INPUT REQUIRED HERE' and provide those 4 properties.
+Check the line in the code where it says 'YOUR INPUT REQUIRED HERE' and provide your HubSpot API key / hapikey.
 
 ![Provide your data](readme_images/provide-your-data.png)
 
-Now you can test your Cloud Function to make sure everything works fine. Therefore, save it and click Invoke with Parameters, provide the input below, and click Apply, then click Invoke. Results are shown in the Activations pane. In Jira your new issue should be created.
+Now you can test your Cloud Function to make sure everything works fine. Therefore, save it and click Invoke with Parameters, provide the input below, and click Apply, then click Invoke. Results are shown in the Activations pane. In your HubSpot CRM system your new contact should be created.
 
 ```
 {
-  "jiraIssueType": "10002",
-  "jiraIssueSummary": "New Task created via IBM Cloud Function", 
-  "jiraIssueDescription": "Description of the Task created via IBM Cloud Function"
+  "crmCompany": "IBM",
+  "crmEmail": "max.mustermann@ibm.com", 
+  "crmFirstname": "Max",
+  "crmLastname": "Mustermann",
+  "crmPhone": "+49172123456789",
+  "crmWebsite": "www.ibm.com",
 }
 ```
 
