@@ -42,7 +42,7 @@ Now you can test your Cloud Function to make sure everything works fine. Therefo
   "crmFirstname": "Max",
   "crmLastname": "Mustermann",
   "crmPhone": "+49172123456789",
-  "crmWebsite": "www.ibm.com",
+  "crmWebsite": "www.ibm.com"
 }
 ```
 
