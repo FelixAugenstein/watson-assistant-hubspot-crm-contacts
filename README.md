@@ -58,7 +58,7 @@ In your IBM Cloud Account go to the dashboard by clicking the IBM Logo in the up
 
 Afterwards launch your Watson Assistant Service, you will find it on your dashboard under services.
 
-Go to skills and create a new skill, when asked choose the dialog skill. Select import skill and upload the `skill-create-Jira-Issues.json` file.
+Go to skills and create a new skill, when asked choose the dialog skill. Select import skill and upload the `skill-HubSpot-CRM-Example.json` file.
 
 ![Import Skill](readme_images/import-skill.png)
 
@@ -66,7 +66,7 @@ Click options and then select Webhooks. Provide the Web Action URL you obtained 
 
 ![Add Webhook with JSON](readme_images/add-webhook-dotjson.png)
 
-Now you can go to the dialog and try it out for yourself. You can create a new issue and verify it in your Jira project.
+Now you can go to the dialog and try it out for yourself. You can create a new contact and verify it in your HubSpot CRM system.
 
 ![Try it Out](readme_images/try-it-out.png)
 
