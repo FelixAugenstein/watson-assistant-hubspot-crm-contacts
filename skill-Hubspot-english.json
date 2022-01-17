@@ -1,0 +1,600 @@
+{
+  "intents": [
+    {
+      "intent": "New-Contact",
+      "examples": [
+        {
+          "text": "Add a new Contact"
+        },
+        {
+          "text": "I want to create a new contact"
+        },
+        {
+          "text": "i would like to leave my contact information behind"
+        },
+        {
+          "text": "New entry in CRM system"
+        },
+        {
+          "text": "Please add my contact information"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "No",
+      "examples": [
+        {
+          "text": "incorrect"
+        },
+        {
+          "text": "No"
+        },
+        {
+          "text": "please don't create Contact"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Yes",
+      "examples": [
+        {
+          "text": "correct"
+        },
+        {
+          "text": "That is correct"
+        },
+        {
+          "text": "Yes"
+        },
+        {
+          "text": "Yes, please"
+        },
+        {
+          "text": "ys"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "webhooks": [
+    {
+      "url": "",
+      "name": "main_webhook",
+      "headers": []
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_3_1642179241305",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_2_1642177433759",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1642177433767",
+      "previous_sibling": "handler_9_1642177433767"
+    },
+    {
+      "type": "event_handler",
+      "parent": "slot_2_1642177433759",
+      "event_name": "input",
+      "dialog_node": "handler_9_1642177433767"
+    },
+    {
+      "type": "standard",
+      "title": "set context variable",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1642179114834",
+      "context": {
+        "crmWebsite": "<? input.text.extract('[a-zA-Z0-9._%+-]+(\\.[a-zA-Z0-9]+)+(\\.[a-zA-Z]+){1,}',0)?>"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_3_1642179241305"
+      },
+      "conditions": "true",
+      "dialog_node": "node_10_1642179114835"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "No new contact was created."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1642179241305",
+      "conditions": "#No",
+      "dialog_node": "node_10_1642406684214",
+      "previous_sibling": "node_2_1642179371894"
+    },
+    {
+      "type": "standard",
+      "title": "Add Lastname",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please enter your last name"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_1_1642178593983",
+      "previous_sibling": "node_7_1642177308994"
+    },
+    {
+      "type": "standard",
+      "title": "set context variable",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1642178593983",
+      "context": {
+        "crmLastname": "<? input.text.extract('[a-zA-Z0-9\\s]+',0) ?>"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_3_1642178663993"
+      },
+      "conditions": "true",
+      "dialog_node": "node_2_1642178593984"
+    },
+    {
+      "type": "standard",
+      "parent": "node_3_1642179241305",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "crmEmail": "$crmEmail",
+            "crmPhone": "$crmPhone",
+            "crmCompany": "$crmCompany",
+            "crmWebsite": "$crmWebsite",
+            "crmLastname": "$crmLastname",
+            "crmFirstname": "$crmFirstname"
+          },
+          "result_variable": "webhook_result_1"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Yes",
+      "dialog_node": "node_2_1642179371894"
+    },
+    {
+      "type": "standard",
+      "title": "Add Company",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "What company do you work for?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_3_1642178663993",
+      "previous_sibling": "node_1_1642178593983"
+    },
+    {
+      "type": "standard",
+      "title": "Ask for confimation",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "We are almost finished, please check your information: $crmFirstname $crmLastname, $crmCompany. email: $crmEmail. phone:  $crmPhone. webseite: $crmWebsite. If your informations are correct, please type \"yes\"."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_3_1642179241305",
+      "previous_sibling": "node_9_1642179114834"
+    },
+    {
+      "type": "standard",
+      "title": "set context variable",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1642178663993",
+      "context": {
+        "crmCompany": "<? input.text.extract('[a-zA-Z0-9\\s]+',0) ?>"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_5_1642178789807"
+      },
+      "conditions": "true",
+      "dialog_node": "node_4_1642178663994"
+    },
+    {
+      "type": "standard",
+      "title": "Add Email",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please enter your e-mail."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_5_1642178789807",
+      "previous_sibling": "node_3_1642178663993"
+    },
+    {
+      "type": "standard",
+      "title": "set context variable",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_5_1642178789807",
+      "context": {
+        "crmEmail": "<? input.text.extract('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+(\\.[a-zA-Z]+){1,}',0)?>"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_7_1642178940131"
+      },
+      "conditions": "true",
+      "dialog_node": "node_6_1642178789807"
+    },
+    {
+      "type": "standard",
+      "title": "Add Firstname",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please enter your given name."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_7_1642177308994",
+      "previous_sibling": "node_7_1642177347493"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "If you want me to create a new contact, i need some additional information"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {
+        "crmEmail": null,
+        "crmPhone": null,
+        "crmCompany": null,
+        "crmWebsite": null,
+        "crmLastname": null,
+        "crmFirstname": null
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_7_1642177308994"
+      },
+      "conditions": "#New-Contact",
+      "dialog_node": "node_7_1642177347493",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "set context variable",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1642177308994",
+      "context": {
+        "crmFirstname": "<? input.text.extract('[a-zA-Z0-9\\s]+',0) ?>"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_1_1642178593983"
+      },
+      "conditions": "true",
+      "dialog_node": "node_7_1642177999794"
+    },
+    {
+      "type": "standard",
+      "title": "Add Phone",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "What is your phone number?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_7_1642178940131",
+      "previous_sibling": "node_5_1642178789807"
+    },
+    {
+      "type": "standard",
+      "title": "set context variable",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1642178940131",
+      "context": {
+        "crmPhone": "<? input.text.extract('[0-9._%+-]+',0) ?>"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_9_1642179114834"
+      },
+      "conditions": "true",
+      "dialog_node": "node_8_1642178940132"
+    },
+    {
+      "type": "standard",
+      "title": "Add Website",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please enter your companys website."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_9_1642179114834",
+      "previous_sibling": "node_7_1642178940131"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "$webhook_result_1.message"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_2_1642179371894",
+      "conditions": "$webhook_result_1",
+      "dialog_node": "response_4_1642179387291"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "Das hat leider nicht geklappt. Versuchen Sie es bitte nochmal."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_2_1642179371894",
+      "conditions": "anything_else",
+      "dialog_node": "response_7_1642179388466",
+      "previous_sibling": "response_4_1642179387291"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Leider gab es einen Fehler: <? output.webhook_error.webhook_result_1 ?>."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_2_1642179371894",
+      "conditions": "output.webhook_error",
+      "dialog_node": "response_7_1642406651052",
+      "previous_sibling": "response_7_1642179388466"
+    },
+    {
+      "type": "slot",
+      "parent": "node_7_1642177347493",
+      "dialog_node": "slot_2_1642177433759"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello. How can I help you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "intent_classification": {
+      "training_backend_version": "v2"
+    },
+    "spelling_auto_correct": false
+  },
+  "learning_opt_out": false,
+  "name": "Hubspot-english",
+  "language": "en",
+  "description": ""
+}
