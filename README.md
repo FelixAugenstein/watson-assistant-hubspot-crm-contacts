@@ -21,7 +21,8 @@ For more information you can access the [HubSpot API docs for the CRM](https://d
 
 In your IBM Cloud account go to IBM Cloud Dashboard. Click the Cloud Functions button, then go to Actions and click create, to create a new action.
 
-![Cloud Functions Button](readme_images/cloud-functions-button.png)
+![Cloud Functions Button](readme_images/select-function.png)
+![Actions Button](readme_images/select-functions-actions.png)
 
 Click on Action and give your action a name, keep the Default Package and choose Node.js as your runtime. Click create.
 
@@ -54,7 +55,7 @@ Now go to Endpoints, enable it as a Web Action, save and copy the provided URL. 
 
 In your IBM Cloud Account go to the dashboard by clicking the IBM Logo in the upper left. Go to Catalog and select the AI / Machine Learning category under services or search for Watson Assistant. Then create a new Watson Assistant service, the Lite Plan should work for this tutorial. 
 
-![Create Watson Assistant](readme_images/create-watson-assistant.png)
+![Create Watson Assistant](readme_images/select-watson-assistant.png)
 
 Afterwards launch your Watson Assistant Service, you will find it on your dashboard under services.
 
