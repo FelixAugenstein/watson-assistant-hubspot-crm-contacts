@@ -23,7 +23,7 @@ In your IBM Cloud account go to IBM Cloud Dashboard. Click the Cloud Functions b
 
 ![Cloud Functions Button](readme_images/cloud-functions-button.png)
 
-Give your action a name, keep the Default Package and choose Node.js - for instance 10 or 12 - as your runtime. Click create.
+Click on Action and give your action a name, keep the Default Package and choose Node.js as your runtime. Click create.
 
 ![Create Cloud Function Action](readme_images/create-cloud-function.png)
 
